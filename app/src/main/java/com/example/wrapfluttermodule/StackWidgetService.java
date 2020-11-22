@@ -28,7 +28,7 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     private List<String> language = Arrays.asList("C","C++","Java",".Net","Kotlin","Ruby","Rails","Python","Java Script","Php","Ajax","Perl","Hadoop", "henry");
 
     private int mCount;
-
+//
     private List<WidgetItem> mWidgetItems = new ArrayList<WidgetItem>();
     private Context mContext;
     private int mAppWidgetId;
