@@ -4,17 +4,12 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-import com.android.volley.VolleyError;
 import com.example.wrapfluttermodule.Crypto.CryptoHelper;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class StackWidgetService extends RemoteViewsService {
@@ -25,45 +20,32 @@ public class StackWidgetService extends RemoteViewsService {
 }
 class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
-    private List<String> language = Arrays.asList("C","C++","Java",".Net","Kotlin","Ruby","Rails","Python","Java Script","Php","Ajax","Perl","Hadoop", "henry");
-
     private int mCount;
-//
+
     private List<WidgetItem> mWidgetItems = new ArrayList<WidgetItem>();
     private Context mContext;
     private int mAppWidgetId;
 
-    IResult  mResultCallback = null;
-    VolleyService mVolleyService;
-    DatabaseHandler mDb;
+    private VolleyService mVolleyService;
+    private DatabaseHandler mDb;
 
-    public StackRemoteViewsFactory(Context context, Intent intent) {
+    StackRemoteViewsFactory(Context context, Intent intent) {
         mContext = context;
         mAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);
         mDb = new DatabaseHandler(context);
         mCount = mDb.getAllCurrencies().size();
-//        code below was used to call getcrypto function
-//        mDataVoyage.getCrypto(context);
-//        Log.d("TAG", "StackRemoteViewsFactory just ran");
+
     }
     public void onCreate() {
         // In onCreate() you setup any connections / cursors to your data source. Heavy lifting,
         // for example downloading or creating content etc, should be deferred to onDataSetChanged()
         // or getViewAt(). Taking more than 20 seconds in this call will result in an ANR.
 
-//        String json = mDataVoyage.getCrypto(mContext);
-//        Log.d("TAG", "onCreate of StackRemoteViewsFactory just ran => Result of jSon: "+mDataVoyage.getCrypto(mContext));
-        initVolleyCallback();
-        mVolleyService = new VolleyService(mResultCallback, mContext);
+        mVolleyService = new VolleyService(mContext);
         mVolleyService.getDataVolley();
         List<CryptoHelper> cryptos = mDb.getAllCurrencies();
-//        for (int i = 0; i < mCount; i++) {
-//
-//            // this here loops through the word  in the loop
-//            mWidgetItems.add(new WidgetItem(language.get(1) + "!"));
-//
-//        }
+
         for(CryptoHelper ch: cryptos) {
             mWidgetItems.add(new WidgetItem(ch.getCryptoName(), ch.getPriceValue()));
         }
@@ -141,22 +123,5 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     }
 
 
-
-    void initVolleyCallback(){
-        mResultCallback = new IResult() {
-            @Override
-            public JSONObject notifySuccess(JSONObject response) {
-//                Log.d(TAG, "Volley requester " + requestType);
-                Log.d("TAG", "Volley JSON post" + response);
-                return response;
-            }
-
-            @Override
-            public void notifyError(VolleyError error) {
-//                Log.d(TAG, "Volley requester " + requestType);
-                Log.d("TAG", "Volley JSON post" + "That didn't work!");
-            }
-        };
-
-    }}
+}
 
