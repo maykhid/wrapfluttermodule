@@ -2,9 +2,9 @@ include ':app'
 setBinding(new Binding([gradle: this]))
 evaluate(new File(
   settingsDir,
-  '../crypto_module/.android/include_flutter.groovy'
+  '../WrapFlutterModule/crypto_module/.android/include_flutter.groovy'
 ))
 rootProject.name='WrapFlutterModule'
 
 include ':crypto_module'
-project(':crypto_module').projectDir = new File('../crypto_module')
+project(':crypto_module').projectDir = new File('../WrapFlutterModule/crypto_module')
