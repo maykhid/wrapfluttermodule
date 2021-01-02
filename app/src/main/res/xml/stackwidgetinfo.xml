@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--updatePeriodMillis is set to 0 to prevent using
+the default update period style
+-->
 <appwidget-provider
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:minWidth="222dip"
     android:minHeight="222dip"
-    android:updatePeriodMillis="3600000"
+    android:updatePeriodMillis="0"
 
     android:initialLayout="@layout/listview_layout"
     android:autoAdvanceViewId="@id/listviewshow">

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.wrapfluttermodule.Crypto.CryptoHelper;
 
@@ -47,6 +48,73 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.insert(TABLE_CRYPTOS, null, values);
         db.close();
 
+    }
+
+    /* isNotEmpty()
+    * mCursor.moveToFirst() -> Returns a boolean of whether it successfully found an element or not.
+    * Use it to move to the first row in the cursor and at the same time check if a row actually exists.
+    * */
+    public Boolean isNotEmpty() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor mCursor = db.rawQuery("SELECT * FROM " + TABLE_CRYPTOS, null);
+        Boolean rowExists;
+
+        if (mCursor.moveToFirst()) {
+            // DO SOMETHING WITH CURSOR
+            rowExists = true;
+
+        } else {
+            // I AM EMPTY
+            rowExists = false;
+        }
+        return rowExists;
+    }
+
+    void updateJSON(CryptoHelper crypto, int ID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        final String where = KEY_ID + " = " + ID;
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME, crypto.getCryptoName());
+        values.put(KEY_COIN_VALUE, crypto.getPriceValue());
+
+        // updating row
+//        db.update(TABLE_CRYPTOS, values, KEY_ID + " = ?",
+//                new String[] { String.valueOf(crypto.getID()) });
+        db.update(TABLE_CRYPTOS, values, where, null);
+
+    }
+
+    void deleteAll() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_CRYPTOS, null, null);
+        getAllCurrencies().clear();
+    }
+
+    void updateAll(CryptoHelper crypto) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int ID = 0;
+        String where = KEY_ID + " = " + ID;
+        String whereArgs[] = { String.valueOf(crypto.getID()) };
+
+        String selectQuery = "SELECT * FROM " + TABLE_CRYPTOS;
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        ContentValues values = new ContentValues();
+
+        if (cursor.moveToFirst()) {
+            do {
+                values.put(KEY_NAME, crypto.getCryptoName());
+                values.put(KEY_COIN_VALUE, crypto.getPriceValue());
+                db.update(TABLE_CRYPTOS, values, "id=?", whereArgs);
+                ID++;
+                Log.d("Updated sql", "Update just ran");
+                Log.d("Updated sql", "Crypto name "+crypto.getCryptoName()+ "ID value "+ ID);
+            }while (cursor.moveToPosition(ID));
+        } else {
+            cursor.moveToNext();
+        }
     }
 
     public List<CryptoHelper> getAllCurrencies() {

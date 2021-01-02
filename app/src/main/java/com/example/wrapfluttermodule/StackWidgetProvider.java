@@ -6,15 +6,23 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
 public class StackWidgetProvider extends AppWidgetProvider {
     public static final String TOAST_ACTION = "com.example.android.stackwidget.TOAST_ACTION";
     public static final String EXTRA_ITEM = "com.example.android.stackwidget.EXTRA_ITEM";
+    private final static String TAG = "StackWidgetProvider";
+    private DatabaseHandler mDb;
+    private PendingIntent pendingIntent;
     @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
+        mDb = new DatabaseHandler(context);
+        mDb.deleteAll();
         super.onDeleted(context, appWidgetIds);
+        Log.d(TAG, "OnDeleted just ran");
+
     }
     @Override
     public void onDisabled(Context context) {
@@ -63,10 +71,16 @@ public class StackWidgetProvider extends AppWidgetProvider {
                     PendingIntent.FLAG_UPDATE_CURRENT);
             rv.setPendingIntentTemplate(R.id.listviewshow, toastPendingIntent);
             appWidgetManager.updateAppWidget(appWidgetIds[i], rv);
+
+//            Intent updateIntent = new Intent(context, UpdateService.class);
+//            updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+//
+//            UpdateService.enqueueWork(context, updateIntent);
         }
 //        This commented line is supposedly going to update data on the stackviews
-//        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_item);
+//        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.listviewshow);
         super.onUpdate(context, appWidgetManager, appWidgetIds);
+        Log.d(TAG, "OnUpdate StackWidgetProvider just ran");
     }
 }
 

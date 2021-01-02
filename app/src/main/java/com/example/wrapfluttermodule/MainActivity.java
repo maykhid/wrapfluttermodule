@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        getCrypto();
 
         // FlutterEngine here is initialized to  make use of Method channel
         // Why I took this approach was due to the fact that flutter was added in this app as a module
@@ -42,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         // The MainActivity doesn't inherit the FlutterActivity in this case so tapping into it required some other
         // approach
 
+        Log.d("Main Activity", "OnCreate just ran");
 
         FlutterEngine flutterEngine = new FlutterEngine(this);
         flutterEngine.getDartExecutor().executeDartEntrypoint(DartExecutor.DartEntrypoint.createDefault());

@@ -32,7 +32,7 @@ class VolleyService {
         if(jsonObj != null) {
             try {
                 JSONArray data = jsonObj.getJSONArray("data");
-                for (int i = 0; i < data.length(); i++) {
+                for (int i = 0; i < 50; i++) {
                     JSONObject coins = data.getJSONObject(i);
                     String id = coins.getString("id");
                     String name = coins.getString("name");
@@ -40,6 +40,7 @@ class VolleyService {
                     JSONObject USD = quote.getJSONObject("USD");
                     String  price = USD.getString("price");
                     mDb.insertJSON(new CryptoHelper(name, price));
+//                    resolveData(name, price);
                 }
             } catch (final JSONException e) {
                 Log.e("TAG", "JSON data parsing error :" + e.getMessage());
@@ -50,7 +51,7 @@ class VolleyService {
     }
 
 
-    public void getDataVolley () {
+    public void getDataVolley() {
 
         final String url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest";
         RequestQueue queue = Volley.newRequestQueue(mContext);
@@ -99,5 +100,12 @@ class VolleyService {
         };
         queue.add(getRequest);
     }
+//    public void resolveData(String name, String price) {
+//        if(mDb.isNotEmpty()) {
+//            mDb.updateAll(new CryptoHelper(name, price));
+//        } else {
+//            mDb.insertJSON(new CryptoHelper(name, price));
+//        }
+//    }
 
 }
