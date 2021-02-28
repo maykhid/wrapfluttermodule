@@ -14,12 +14,11 @@ public class StackWidgetProvider extends AppWidgetProvider {
     public static final String TOAST_ACTION = "com.example.android.stackwidget.TOAST_ACTION";
     public static final String EXTRA_ITEM = "com.example.android.stackwidget.EXTRA_ITEM";
     private final static String TAG = "StackWidgetProvider";
-    private DatabaseHandler mDb;
+
     private PendingIntent pendingIntent;
     @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
-        mDb = new DatabaseHandler(context);
-        mDb.deleteAll();
+
         super.onDeleted(context, appWidgetIds);
         Log.d(TAG, "OnDeleted just ran");
 
@@ -55,7 +54,7 @@ public class StackWidgetProvider extends AppWidgetProvider {
             // into the data so that the extras will not be ignored.
             intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.listview_layout);
-            rv.setRemoteAdapter(appWidgetIds[i], R.id.listviewshow, intent);
+            rv.setRemoteAdapter(R.id.listviewshow, intent);
             // The empty view is displayed when the collection has no items. It should be a sibling
             // of the collection view.
             rv.setEmptyView(R.id.listviewshow, R.id.empty_view);
