@@ -6,8 +6,8 @@ the default update period style
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:minWidth="222dip"
     android:minHeight="222dip"
-    android:updatePeriodMillis="0"
+    android:updatePeriodMillis="900000"
 
-    android:initialLayout="@layout/listview_layout"
-    android:autoAdvanceViewId="@id/listviewshow">
+    android:initialLayout="@layout/listview_layout">
+<!--    android:autoAdvanceViewId="@id/listviewshow">-->
 </appwidget-provider>
