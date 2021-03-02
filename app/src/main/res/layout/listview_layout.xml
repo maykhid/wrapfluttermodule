@@ -5,10 +5,23 @@
     android:orientation="vertical">
     <FrameLayout
         android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="#707070">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            android:fontFamily="casual"
+            android:textColor="#000000"
+            android:layout_gravity="center_vertical"
+            android:text="@string/cryptoworld"/>
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:layout_gravity="center"
-        android:background="#ff5555">
+        android:layout_gravity="center">
 
         <ListView
             android:id="@+id/listviewshow"
@@ -16,17 +29,19 @@
             android:layout_height="match_parent"
             android:layout_marginTop="3dp"
             android:layout_marginLeft="3dp"
-            android:background="#C0C0C0"></ListView>
+            android:background="#C0C0C0"/>
+
         <TextView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/empty_listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             android:visibility="gone"
-            android:background="#ff0"
-            android:textColor="#ffffff"
+            android:background="#ffffff"
+            android:textColor="#000000"
             android:textStyle="bold"
-            android:text="This is empty"
+            android:fontFamily="casual"
+            android:text="This is empty, Tap to reload"
             android:textSize="20sp" />
     </FrameLayout>
 

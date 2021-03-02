@@ -3,7 +3,7 @@
     android:id="@+id/relativelay"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="#005"
+    android:background="#000000"
     android:orientation="vertical" >
 
     <TextView
@@ -12,10 +12,12 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="3dp"
         android:layout_marginTop="3dp"
-        android:text="Title"
-        android:textSize="17dp"
+        android:text="@string/title"
+        android:textSize="17sp"
         android:textStyle="bold"
-        android:textColor="#2F1F1F">
+        android:textColor="#ffffff"
+        android:fontFamily="casual"
+        android:layout_marginStart="3dp">
     </TextView>
 
     <TextView
@@ -25,9 +27,11 @@
         android:layout_below="@+id/tvname"
         android:layout_marginLeft="3dp"
         android:layout_marginTop="10dp"
-        android:text="Price Value"
-        android:textSize="14dp"
-        android:textColor="#2F1F1F">
+        android:text="@string/price_value"
+        android:textSize="14sp"
+        android:textColor="#ffffff"
+        android:fontFamily="casual"
+        android:layout_marginStart="3dp">
     </TextView>
 
 

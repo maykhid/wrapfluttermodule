@@ -20,6 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,7 +87,7 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
         RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.listview_item);
         rv.setTextViewText(R.id.tvname, cryptoItems.get(position).name);
-        rv.setTextViewText(R.id.tvprice, cryptoItems.get(position).price);
+        rv.setTextViewText(R.id.tvprice, "$"+cryptoItems.get(position).price);
         // Next, we set a fill-intent which will be used to fill-in the pending intent template
         // which is set on the collection view in StackWidgetProvider.
 
@@ -184,9 +185,15 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
                     JSONObject quote = coins.getJSONObject("quote");
                     JSONObject USD = quote.getJSONObject("USD");
                     String  price = USD.getString("price");
-                    cryptoHelperList.add(new CryptoHelper(Integer.parseInt(id), name, price));
+                    Double d = Double.parseDouble(price);
 
-                    Log.i(TAG, id +" - "+name +" - "+price);
+                    NumberFormat nf = NumberFormat.getNumberInstance();
+                    nf.setMaximumFractionDigits(2);
+                    String priceRounded = nf.format(d);
+
+                    cryptoHelperList.add(new CryptoHelper(Integer.parseInt(id), name, priceRounded));
+
+                    Log.i(TAG, id +" - "+name +" - "+priceRounded);
                 }
                 cryptoItems = cryptoHelperList;
             } catch (final JSONException e) {

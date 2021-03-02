@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">WrapFlutterModule</string>
     <string name="action_settings">Settings</string>
+    <string name="cryptoworld">CryptoWorld</string>
+    <string name="title">Title</string>
+    <string name="price_value">Price Value</string>
 </resources>
