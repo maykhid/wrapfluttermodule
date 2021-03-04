@@ -28,7 +28,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="3dp"
-            android:layout_marginLeft="3dp"
             android:background="#C0C0C0"/>
 
         <TextView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -41,7 +40,7 @@
             android:textColor="#000000"
             android:textStyle="bold"
             android:fontFamily="casual"
-            android:text="This is empty, Tap to reload"
+            android:text="@string/this_is_empty_tap_to_reload"
             android:textSize="20sp" />
     </FrameLayout>
 
