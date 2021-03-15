@@ -1,8 +1,10 @@
+import 'package:cryptomodule/crypto_helper/crypto_helper.dart';
+import 'package:cryptomodule/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class HomeScreen extends StatefulWidget {
-  final List currencies;
+  final List<CryptoHelper> currencies;
   HomeScreen(this.currencies);
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -63,9 +65,8 @@ class _HomeScreenState extends State<HomeScreen> {
           child: ListView.builder(
             itemCount: lengthOfList,
             itemBuilder: (BuildContext context, int index) {
-              final Map currency = widget.currencies[index];
+              final List<CryptoHelper> currency = widget.currencies;
               final MaterialColor color = _colors[index % _colors.length];
-//              print('print from crrypto widget ${widget.currencies[index]}');
               return _getListItemUI(currency, color, index);
             },
           ),
@@ -80,18 +81,19 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  ListTile _getListItemUI(Map currency, MaterialColor color, int index) {
+  ListTile _getListItemUI(List<CryptoHelper> currency, MaterialColor color, int index) {
     return ListTile(
       leading: CircleAvatar(
-        backgroundColor: color,
-        child: Text(currency['name'][0]),
+        // backgroundColor: color,
+        // child: Text(currency[index].name[0]),
+        backgroundImage: NetworkImage(currency[index].logoUrl),
       ),
       title: Text(
-        currency['name'],
+        currency[index].name,
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
-      subtitle: _getSubtitle(currency['quote']['USD']['price'],
-          currency['quote']['USD']['percent_change_1h']),
+      subtitle: _getSubtitle(currency[index].price,
+          currency[index].percentageChange_1h),
       isThreeLine: true,
     );
   }
