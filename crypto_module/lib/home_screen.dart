@@ -14,33 +14,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _getBatteryLevel();
+    // ignore
+    // _getBatteryLevel();
   }
   final List<MaterialColor> _colors = [Colors.blue, Colors.indigo, Colors.red];
-  static const platform = const MethodChannel('samples.flutter.dev/battery');
-
-  String _batteryLevel = 'Unknown battery level';
-
-  // The _getBatteryLevel communicates with the platform channel to get battery level
-  // of the devices
-
-  Future<void> _getBatteryLevel() async {
-    String batteryLevel;
-//    String text = 'pass value to native code';
-//    List currencyData = widget.currencies;
-
-    try {
-      final int result = await platform.invokeMethod('getBatteryLevel');
-      batteryLevel = 'Battery level at $result % .';
-    } on PlatformException catch (e) {
-      batteryLevel = "Failed to get battery level: '${e.message}'.";
-    }
-
-    setState(() {
-      _batteryLevel = batteryLevel;
-      print('This is the ba3 level from flutter $_batteryLevel');
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,14 +46,16 @@ class _HomeScreenState extends State<HomeScreen> {
               final MaterialColor color = _colors[index % _colors.length];
               return _getListItemUI(currency, color, index);
             },
+            physics: BouncingScrollPhysics(),
           ),
         ),
-        Container(
-          child: RaisedButton(
-            child: Text(_batteryLevel),
+// ignore
+//         Container(
+//           child: RaisedButton(
+//             child: Text(_batteryLevel),
 //            onPressed: _getBatteryLevel,
-          ),
-        ),
+//           ),
+//         ),
       ],
     );
   }
@@ -122,3 +101,32 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+
+
+
+//ignore
+// static const platform = const MethodChannel('samples.flutter.dev/battery');
+
+// String _batteryLevel = 'Unknown battery level';
+
+// The _getBatteryLevel communicates with the platform channel to get battery level
+// of the devices
+
+// Future<void> _getBatteryLevel() async {
+//   String batteryLevel;
+//    String text = 'pass value to native code';
+//    List currencyData = widget.currencies;
+
+//   try {
+//     final int result = await platform.invokeMethod('getBatteryLevel');
+//     batteryLevel = 'Battery level at $result % .';
+//   } on PlatformException catch (e) {
+//     batteryLevel = "Failed to get battery level: '${e.message}'.";
+//   }
+//
+//   setState(() {
+//     _batteryLevel = batteryLevel;
+//     print('This is the ba3 level from flutter $_batteryLevel');
+//   });
+// }

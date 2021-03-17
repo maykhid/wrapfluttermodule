@@ -67,7 +67,7 @@ Future<List<CryptoHelper>> getCurrencies() async {
               list[i]['id'],
               list[i]['name'],
               _checkInt(list[i]['quote']['USD']['price']),
-              list[i]['quote']['USD']['percent_change_1h'],
+              _checkInt(list[i]['quote']['USD']['percent_change_1h']),
               cryptoInfoList[i]));
       print('id ${list[i]['id']}, name ${list[i]['name']} price ${list[i]['quote']['USD']['price']}, url ${cryptoInfoList[i]}');
       print(_constructList[i].name);
@@ -98,7 +98,7 @@ Future<List> getCryptoInfo(String cryptIDS, List len) async {
   );
 
   if(response.statusCode == 200){
-    print("The logo ${jsonDecode(response.body)['data']}");
+    // print("The logo ${jsonDecode(response.body)['data']}");
     List _tempList = [];
 
     for (int i = 0; i < len.length; i++ ) {
@@ -126,7 +126,7 @@ String _listModifier(List obj) {
 // converts int to a double
 double _checkInt(var val) {
   if(val is int) return val.roundToDouble();
-  else return val;
+  else return val as double;
 }
 // List _list() {
 //   List tempList = [];
