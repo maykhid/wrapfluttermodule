@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class HomeScreen extends StatefulWidget {
-  final List<CryptoHelper> currencies;
-  HomeScreen(this.currencies);
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  Future<List<CryptoHelper>> futureList;
   @override
   void initState() {
     super.initState();
+    futureList = getCurrencies();
     // ignore
     // _getBatteryLevel();
   }
@@ -34,19 +34,29 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _cryptoWidget() {
-    int lengthOfList = widget.currencies.length;
-    print('length of List $lengthOfList');
     return Column(
       children: [
         Flexible(
-          child: ListView.builder(
-            itemCount: lengthOfList,
-            itemBuilder: (BuildContext context, int index) {
-              final List<CryptoHelper> currency = widget.currencies;
-              final MaterialColor color = _colors[index % _colors.length];
-              return _getListItemUI(currency, color, index);
+          child: FutureBuilder(
+            future: futureList,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final List<CryptoHelper> currency = snapshot.data;
+                    final MaterialColor color = _colors[index % _colors.length];
+                    return _getListItemUI(currency, color, index);
+                  },
+                  physics: BouncingScrollPhysics(),
+                );
+              } else if (snapshot.hasError) {
+                return Text("${snapshot.error}");
+              }
+
+              return Center(child: CircularProgressIndicator());
             },
-            physics: BouncingScrollPhysics(),
+            // child:
           ),
         ),
 // ignore
